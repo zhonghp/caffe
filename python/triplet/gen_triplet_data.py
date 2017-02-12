@@ -26,6 +26,8 @@ def read_images(input_folder):
         image_folder = os.path.join(input_folder, folder)
         filenames = read_images_from_folder(image_folder)
         X.append(filenames)
+    lens = map(len, X)
+    print min(lens), max(lens)
     return X
 
 def generate_triplet_data(input_images, pair_size, valid_ratio=0.10):
@@ -47,7 +49,7 @@ def generate_triplet_data(input_images, pair_size, valid_ratio=0.10):
 if __name__ == '__main__':
     if len(sys.argv) != 3:
         print 'Usage: python gen_triplet_data.py [folder] [pair_size]'
-        return
+        sys.exit(-1)
     
     face_path = sys.argv[1]
     pair_size = int(sys.argv[2])
