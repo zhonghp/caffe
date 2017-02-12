@@ -14,7 +14,7 @@ def read_images_from_folder(input_folder):
             print filename
             continue
         
-        if filename[-4:] != 'jpg' and filename[-4:] != '.png':
+        if filename[-4:] != '.jpg' and filename[-4:] != '.png':
             print filename
             continue
         filenames.append(os.path.abspath(filename))
@@ -27,6 +27,7 @@ def read_images(input_folder):
         filenames = read_images_from_folder(image_folder)
         X.append(filenames)
     lens = map(len, X)
+    print 'Totally', len(X), 'folders.'
     print min(lens), max(lens)
     return X
 
