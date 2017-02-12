@@ -53,8 +53,13 @@ if __name__ == '__main__':
     pair_size = int(sys.argv[2])
 
     X = read_images(face_path)
-    train_triplets, valid_triplets = generate_triplet_data(X, pair_size)
-    with open('./train_triplets.txt', 'w') as f:
-        f.writelines('\n'.join(train_triplets))
-    with open('./valid_triplets.txt', 'w') as f:
-        f.writelines('\n'.join(valid_triplets))
+    train_writer = open('./train_triplets.txt', 'w')
+    valid_writer = open('./valid_triplets.txt', 'w')
+    for train_triplets, valid_triplets in generate_triplet_data(X, pair_size):
+        train_writer.writelines('\n'.join(train_triplets))
+        valid_writer.writelines('\n'.join(valid_triplets))
+
+    train_writer.flush()
+    train_writer.close()
+    valid_writer.flush()
+    valid_writer.close()
