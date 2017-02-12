@@ -34,6 +34,7 @@ def read_images(input_folder):
 def generate_triplet_data(input_images, pair_size, valid_ratio=0.10):
     for idx, images in enumerate(input_images):
         pair_data_list = list(itertools.combinations(images, pair_size))
+        print len(images), 'images and', len(pair_data_list), 'pairs in', idx
         random.shuffle(pair_data_list)
         valid_cnt = int(len(pair_data_list) * valid_ratio)
 
