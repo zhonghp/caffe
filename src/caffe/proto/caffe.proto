@@ -406,6 +406,9 @@ message LayerParameter {
   optional ThresholdParameter threshold_param = 128;
   optional TileParameter tile_param = 138;
   optional WindowDataParameter window_data_param = 129;
+
+  optional L2NParameter l2n_param = 243;
+  optional TripletLossWithSampleParameter triplet_loss_with_sample_param = 244;
 }
 
 // Message that stores parameters used to apply transformation
@@ -801,6 +804,8 @@ message ImageDataParameter {
   // data.
   optional bool mirror = 6 [default = false];
   optional string root_folder = 12 [default = ""];
+
+  optional uint32 pair_size = 13 [default = 1];
 }
 
 message InfogainLossParameter {
@@ -1188,6 +1193,21 @@ message WindowDataParameter {
   optional bool cache_images = 12 [default = false];
   // append root_folder to locate images
   optional string root_folder = 13 [default = ""];
+}
+
+// Message that stores parameters used by L2NLayer
+message L2NParameter {
+  // Epsilon for not dividing by zero while normalizing variance
+  optional float eps = 3 [default = 1e-9];
+}
+
+message TripletLossWithSampleParameter {
+  optional uint32 num_negative = 1 [default = 1];
+  optional float random_ratio = 2 [default = 0.5];
+  optional float hard_ratio = 3 [default = 0.5];
+  optional float margin = 4 [default = 1.0];
+  optional uint32 pair_size = 5 [default = 2];
+  optional bool mirror = 6 [default = true];
 }
 
 message SPPParameter {
