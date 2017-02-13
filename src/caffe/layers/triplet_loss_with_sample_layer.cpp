@@ -23,7 +23,6 @@ namespace caffe {
 
 		TripletLossWithSampleParameter loss_param = this->layer_param_.triplet_loss_with_sample_param();
 		int pair_size = loss_param.pair_size();
-		int pair_num = bottom[0]->num() / pair_size;
 
 		dist_.Reshape(bottom[0]->num(), bottom[0]->num(), 1, 1);
 		flag_.Reshape(bottom[0]->num(), pair_size, bottom[0]->num(), 1);
@@ -44,7 +43,6 @@ namespace caffe {
 		Dtype margin = loss_param.margin();
 		int pair_size = loss_param.pair_size();
 
-		int pair_num = num / pair_size;
 		int hard_num = num_negative * hard_ratio;
 		int random_num = num_negative * random_ratio;
 
@@ -195,7 +193,6 @@ namespace caffe {
 		TripletLossWithSampleParameter loss_param = this->layer_param_.triplet_loss_with_sample_param();
 		Dtype margin = loss_param.margin();
 		int pair_size = loss_param.pair_size();
-		int pair_num = num / pair_size;
 
 		for (int i = 0; i < count; i++)
 			bottom_diff[i] = 0;
