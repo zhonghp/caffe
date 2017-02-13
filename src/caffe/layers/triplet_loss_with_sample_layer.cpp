@@ -127,6 +127,7 @@ namespace caffe {
 			const vector<Blob<Dtype>*>& top) {
 
 		int num = bottom[0]->num();
+		const Dtype* label = bottom[1]->cpu_data();
 
 		const Dtype* dist_data = this->dist_.cpu_data();
 		const Dtype* flag_data = this->flag_.cpu_data();
@@ -182,6 +183,7 @@ namespace caffe {
 
 		const Dtype* bottom_data = bottom[0]->cpu_data();
 		Dtype* bottom_diff = bottom[0]->mutable_cpu_diff();
+		const Dtype* label = bottom[1]->cpu_data();
 
 		int count = bottom[0]->count();
 		int num = bottom[0]->num();
