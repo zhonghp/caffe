@@ -117,7 +117,7 @@ void TripletImageDataLayer<Dtype>::DataLayerSetUp(const vector<Blob<Dtype>*>& bo
 }
 
 template <typename Dtype>
-void ImageDataLayer<Dtype>::ShuffleImages() {
+void TripletImageDataLayer<Dtype>::ShuffleImages() {
   caffe::rng_t* prefetch_rng =
       static_cast<caffe::rng_t*>(prefetch_rng_->generator());
 //   shuffle(lines_.begin(), lines_.end(), prefetch_rng);
@@ -132,7 +132,7 @@ void ImageDataLayer<Dtype>::ShuffleImages() {
 
 // This function is called on prefetch thread
 template <typename Dtype>
-void ImageDataLayer<Dtype>::load_batch(Batch<Dtype>* batch) {
+void TripletImageDataLayer<Dtype>::load_batch(Batch<Dtype>* batch) {
   CPUTimer batch_timer;
   batch_timer.Start();
   double read_time = 0;
