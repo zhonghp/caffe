@@ -122,7 +122,7 @@ void TripletImageDataLayer<Dtype>::ShuffleImages() {
       static_cast<caffe::rng_t*>(prefetch_rng_->generator());
 //   shuffle(lines_.begin(), lines_.end(), prefetch_rng);
 
-  const int pair_size = tihs->layer_param_.triplet_image_data_param().pair_size();
+  const int pair_size = this->layer_param_.triplet_image_data_param().pair_size();
   const int batch_size = this->layer_param_.triplet_image_data_param().batch_size();
   const int pair_num = batch_size / pair_size;
   shuffle(labels_.begin(), labels_.end(), prefetch_rng);
