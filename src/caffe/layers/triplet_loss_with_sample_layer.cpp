@@ -134,7 +134,6 @@ namespace caffe {
 		TripletLossWithSampleParameter loss_param = this->layer_param_.triplet_loss_with_sample_param();
 		Dtype margin = loss_param.margin();
 		int pair_size = loss_param.pair_size();
-		bool mirror = loss_param.mirror();
 
 		select_triplet(bottom);
 
@@ -194,8 +193,6 @@ namespace caffe {
 		TripletLossWithSampleParameter loss_param = this->layer_param_.triplet_loss_with_sample_param();
 		Dtype margin = loss_param.margin();
 		int pair_size = loss_param.pair_size();
-		bool mirror = loss_param.mirror();
-
 		int pair_num = num / pair_size;
 
 		for (int i = 0; i < count; i++)

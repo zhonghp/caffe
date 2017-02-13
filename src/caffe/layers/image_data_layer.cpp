@@ -98,35 +98,11 @@ void ImageDataLayer<Dtype>::DataLayerSetUp(const vector<Blob<Dtype>*>& bottom,
   }
 }
 
-int random_data(int i) {
-	return caffe_rng_rand() % i;
-}
-
 template <typename Dtype>
 void ImageDataLayer<Dtype>::ShuffleImages() {
-  /*
   caffe::rng_t* prefetch_rng =
       static_cast<caffe::rng_t*>(prefetch_rng_->generator());
   shuffle(lines_.begin(), lines_.end(), prefetch_rng);
-  */
-  LOG(INFO) << "Shuffling the images.";
-	const int lines_size = lines_.size();
-
-	ImageDataParameter image_data_param = this->layer_param_.image_data_param();
-	const int pair_size = image_data_param.pair_size();
-	const int pair_num = lines_size / pair_size;
-
-	vector<int> pair_idxs;
-	for (int i = 0; i < pair_num; i++)
-		pair_idxs.push_back(i);
-
-	vector<std::pair<std::string, int> > tmp_lines;
-	std::random_shuffle(pair_idxs.begin(), pair_idxs.end(), random_data);
-	for (int i = 0; i < pair_num; i++)
-		for (int j = 0; j < pair_size; j++)
-			tmp_lines.push_back(lines_[pair_idxs[i] * pair_size + j]);
-
-	lines_ = tmp_lines;
 }
 
 // This function is called on prefetch thread

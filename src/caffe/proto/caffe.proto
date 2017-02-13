@@ -408,7 +408,8 @@ message LayerParameter {
   optional WindowDataParameter window_data_param = 129;
 
   optional L2NParameter l2n_param = 243;
-  optional TripletLossWithSampleParameter triplet_loss_with_sample_param = 244;
+  optional TripletImageDataParameter triplet_image_data_param = 244;
+  optional TripletLossWithSampleParameter triplet_loss_with_sample_param = 245;
 }
 
 // Message that stores parameters used to apply transformation
@@ -804,8 +805,6 @@ message ImageDataParameter {
   // data.
   optional bool mirror = 6 [default = false];
   optional string root_folder = 12 [default = ""];
-
-  optional uint32 pair_size = 13 [default = 1];
 }
 
 message InfogainLossParameter {
@@ -1201,13 +1200,45 @@ message L2NParameter {
   optional float eps = 3 [default = 1e-9];
 }
 
+message TripletImageDataParameter {
+  // Specify the data source.
+  optional string source = 1;
+  // Specify the batch size.
+  optional uint32 batch_size = 4 [default = 1];
+  // The rand_skip variable is for the data layer to skip a few data points
+  // to avoid all asynchronous sgd clients to start at the same point. The skip
+  // point would be set as rand_skip * rand(0,1). Note that rand_skip should not
+  // be larger than the number of keys in the database.
+  optional uint32 rand_skip = 7 [default = 0];
+  // Whether or not ImageLayer should shuffle the list of files at every epoch.
+  optional bool shuffle = 8 [default = false];
+  // It will also resize images if new_height or new_width are not zero.
+  optional uint32 new_height = 9 [default = 0];
+  optional uint32 new_width = 10 [default = 0];
+  // Specify if the images are color or gray
+  optional bool is_color = 11 [default = true];
+  // DEPRECATED. See TransformationParameter. For data pre-processing, we can do
+  // simple scaling and subtracting the data mean, if provided. Note that the
+  // mean subtraction is always carried out before scaling.
+  optional float scale = 2 [default = 1];
+  optional string mean_file = 3;
+  // DEPRECATED. See TransformationParameter. Specify if we would like to randomly
+  // crop an image.
+  optional uint32 crop_size = 5 [default = 0];
+  // DEPRECATED. See TransformationParameter. Specify if we want to randomly mirror
+  // data.
+  optional bool mirror = 6 [default = false];
+  optional string root_folder = 12 [default = ""];
+
+  optional uint32 pair_size = 13 [default = 1];
+}
+
 message TripletLossWithSampleParameter {
   optional uint32 num_negative = 1 [default = 1];
   optional float random_ratio = 2 [default = 0.5];
   optional float hard_ratio = 3 [default = 0.5];
   optional float margin = 4 [default = 1.0];
   optional uint32 pair_size = 5 [default = 2];
-  optional bool mirror = 6 [default = true];
 }
 
 message SPPParameter {
