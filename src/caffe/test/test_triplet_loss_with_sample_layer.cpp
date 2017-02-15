@@ -81,7 +81,7 @@ TYPED_TEST(TripletLossWithSampleLayerTest, TestForward) {
   const int num = this->blob_bottom_label_->count();
   const int dim = this->blob_bottom_data_->count() / num;
   const Dtype* bottom_data = this->blob_bottom_data_->cpu_data();
-  const Dtype* label = this->blob_bottom_label->cpu_data();
+  const Dtype* label = this->blob_bottom_label_->cpu_data();
   Dtype accum_loss = 0;
   int triplet_count = 0;
   for (int i = 0; i < num; i++) {
