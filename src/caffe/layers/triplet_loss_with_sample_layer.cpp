@@ -55,8 +55,13 @@ namespace caffe {
 
 		// calculate the distance
 		for (int i = 0; i < num; i++) {
+			const Dtype* feat_i = bottom_data + (i*dim);
 			for (int j = i+1; j < num; j++) {
-				Dtype dist = -caffe_cpu_dot(dim, bottom_data + (i*dim), bottom_data + (j*dim));
+				const Dtype* feat_j = bottom_data + (j*dim);
+				Dtype dist = 0.0;
+				for (int d = 0; d < dim; d++)
+					dist -= feat_i[d] * feat_j[d];
+				// Dtype dist = -caffe_cpu_dot(dim, bottom_data + (i*dim), bottom_data + (j*dim));
 				dist_data[i*num + j] = dist;
 				dist_data[j*num + i] = dist;
 			}
