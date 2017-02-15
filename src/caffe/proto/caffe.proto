@@ -1241,6 +1241,8 @@ message TripletLossWithSampleParameter {
   optional float hard_ratio = 3 [default = 0.5];
   optional float margin = 4 [default = 0.2];
   optional uint32 pair_size = 5 [default = 2];
+  optional bool mirror = 6 [default = false];
+  optional bool cluster = 7 [default = false];
 }
 
 message SPPParameter {
