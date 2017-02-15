@@ -805,7 +805,7 @@ message ImageDataParameter {
   // data.
   optional bool mirror = 6 [default = false];
   optional string root_folder = 12 [default = ""];
-  
+
   optional uint32 pair_size = 13 [default = 1];
 }
 
@@ -1236,10 +1236,10 @@ message TripletImageDataParameter {
 }
 
 message TripletLossWithSampleParameter {
-  optional uint32 num_negative = 1 [default = 1];
+  optional uint32 num_negative = 1 [default = 0];
   optional float random_ratio = 2 [default = 0.5];
   optional float hard_ratio = 3 [default = 0.5];
-  optional float margin = 4 [default = 1.0];
+  optional float margin = 4 [default = 0.2];
   optional uint32 pair_size = 5 [default = 2];
 }
 
