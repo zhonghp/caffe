@@ -80,23 +80,24 @@ TYPED_TEST(TripletLossWithSampleLayerTest, TestForward) {
   const int pair_size = layer_param.triplet_loss_with_sample_param().pair_size();
   const int num = this->blob_bottom_label_->count();
   const int dim = this->blob_bottom_data_->count() / num;
-  const int pair_num = num / pair_size;
+  const Dtype* bottom_data = this->blob_bottom_data_->cpu_data();
+  const Dtype* label = this->blob_bottom_label->cpu_data();
   Dtype accum_loss = 0;
   int triplet_count = 0;
   for (int i = 0; i < num; i++) {
     int pair_id = i / pair_size;
     for (int k = pair_id*pair_size; k < (pair_id+1)*pair_size; k++) {
-      if (this->blob_bottom_label_[i] != this->blob_bottom_label_[k])
+      if (label[i] != label[k])
         continue;
       if (k == i)
         continue;
 
-      Dtype dist_ik = -caffe_cpu_dot(dim, this->blob_bottom_data_->cpu_data()+(i*dim), this->blob_bottom_data_->cpu_data()+(k*dim));
+      Dtype dist_ik = -caffe_cpu_dot(dim, bottom_data+(i*dim), bottom_data+(k*dim));
       for (int j = 0; j < num; j++) {
-        if (this->blob_bottom_label_[j] == this->blob_bottom_label_[i])
+        if (label[j] == label[i])
           continue;
 
-        Dtype dist_ij = -caffe_cpu_dot(dim, this->blob_bottom_data_->cpu_data()+(i*dim), this->blob_bottom_data_->cpu_data()+(j*dim));
+        Dtype dist_ij = -caffe_cpu_dot(dim, bottom_data+(i*dim), bottom_data+(j*dim));
         if (margin + dist_ik - dist_ij > Dtype(0.0)) {
           triplet_count += 1;
           accum_loss += margin + dist_ik - dist_ij;
