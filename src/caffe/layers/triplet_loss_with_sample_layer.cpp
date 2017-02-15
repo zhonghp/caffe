@@ -175,9 +175,7 @@ namespace caffe {
 
 		const int magic_number = 2500;
 		if (iter_count_ % magic_number == 0)
-			LOG(INFO) << "Totally " << triplet_count << " <a, p, n> triplets.";
-
-		iter_count_ += 1;
+			LOG(INFO) << "Forward totally " << triplet_count << " <a, p, n> triplets.";
 	}
 
 	template <typename Dtype>
@@ -242,10 +240,15 @@ namespace caffe {
 			}
 		}
 
-	    const Dtype loss_weight = top[0]->cpu_diff()[0];
+	        const Dtype loss_weight = top[0]->cpu_diff()[0];
 		for (int i = 0; i < count; i++)
 			if (triplet_count != 0)
 				bottom_diff[i] = bottom_diff[i] * loss_weight / triplet_count;
+
+		const int magic_number = 2500;
+		if (iter_count_ % magic_number == 0)
+			LOG(INFO) << "Backward totally " << triplet_count << " <a, p, n> triplets.";
+		iter_count_ += 1;
 	}
 
 #ifdef CPU_ONLY
