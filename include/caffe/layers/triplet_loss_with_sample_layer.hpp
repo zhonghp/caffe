@@ -17,7 +17,7 @@ namespace caffe {
 		virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
 				const vector<Blob<Dtype>*>& top);
 
-		virtual inline const char* type() const { return "TripletLoss"; }
+		virtual inline const char* type() const { return "TripletLossWithSample"; }
 		virtual inline bool AllowForceBackward(const int bottom_index) const {
 			return true;
 		}
@@ -38,8 +38,6 @@ namespace caffe {
 
 		Blob<Dtype> dist_;
 		Blob<Dtype> flag_;
-		Blob<Dtype> cluster_feat_;
-		Blob<Dtype> cluster_dist_;
 	};
 }
 
