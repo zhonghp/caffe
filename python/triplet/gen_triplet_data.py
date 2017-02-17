@@ -13,7 +13,7 @@ def read_images_from_folder(input_folder):
         if os.path.isdir(filename):
             print filename
             continue
-        
+
         if filename[-4:] != '.jpg' and filename[-4:] != '.png':
             print filename
             continue
@@ -31,29 +31,30 @@ def read_images(input_folder):
     print min(lens), max(lens)
     return X
 
-def generate_triplet_data(input_images, pair_size, valid_ratio=0.10):
-    train_triplets, valid_triplets = [], []
+def generate_triplet_data(input_images, pair_size, valid_cnt=10000):
+    triplets = []
     for idx, images in enumerate(input_images):
         pair_data_list = list(itertools.combinations(images, pair_size))
+        pair_data_list = [pair_data.append(idx) for pair_data in pair_data_list]
         print len(images), 'images and', len(pair_data_list), 'pairs in', idx
-        random.shuffle(pair_data_list)
-        valid_cnt = int(len(pair_data_list) * valid_ratio)
+        triplets.extend(pair_data_list)
+    print 'Totally', len(triplets), 'triplets'
+    random.shuffle(triplets)
 
-        for pair_idx, pair_data in enumerate(pair_data_list):
-            triplets = ['%s %d' % (filename, idx) for filename in pair_data]
-            assert len(triplets) == pair_size
-            if pair_idx < valid_cnt:
-                valid_triplets.extend(triplets)
-            else:
-                train_triplets.extend(triplets)
+    for idx, triplet in enumerate(triplets):
+        assert len(triplet) == pair_size + 1
+        temp_triplet = ['%s %d' % (filename, triplet[-1]) for filename in triplet[:-1]]
+        if idx < valid_cnt:
+            valid_triplets.extend(temp_triplet)
+        else:
+            train_triplets.extend(temp_triplet)
     return train_triplets, valid_triplets
-
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
         print 'Usage: python gen_triplet_data.py [folder] [pair_size]'
         sys.exit(-1)
-    
+
     face_path = sys.argv[1]
     pair_size = int(sys.argv[2])
 
