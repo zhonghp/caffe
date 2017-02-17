@@ -31,16 +31,21 @@ def read_images(input_folder):
     print min(lens), max(lens)
     return X
 
-def generate_triplet_data(input_images, pair_size, valid_cnt=10000):
+def generate_triplet_data(input_images, pair_size, valid_cnt=1000):
     triplets = []
     for idx, images in enumerate(input_images):
         pair_data_list = list(itertools.combinations(images, pair_size))
-        pair_data_list = [pair_data.append(idx) for pair_data in pair_data_list]
-        print len(images), 'images and', len(pair_data_list), 'pairs in', idx
-        triplets.extend(pair_data_list)
+        temp_pair_data_list = []
+        for pair_data in pair_data_list:
+            pair_data = list(pair_data)
+            pair_data.append(idx)
+            temp_pair_data_list.append(tuple(pair_data))
+        print len(images), 'images and', len(temp_pair_data_list), 'pairs in', idx
+        triplets.extend(temp_pair_data_list)
     print 'Totally', len(triplets), 'triplets'
     random.shuffle(triplets)
 
+    train_triplets, valid_triplets = [], []
     for idx, triplet in enumerate(triplets):
         assert len(triplet) == pair_size + 1
         temp_triplet = ['%s %d' % (filename, triplet[-1]) for filename in triplet[:-1]]
