@@ -3,7 +3,7 @@
 # @Author: vasezhong
 # @Date:   2017-02-22 14:56:11
 # @Last Modified by:   vasezhong
-# @Last Modified time: 2017-02-22 16:37:40
+# @Last Modified time: 2017-02-22 16:44:25
 
 import caffe
 import numpy as np
@@ -20,7 +20,6 @@ class VerificationLayer(caffe.Layer):
 
     def forward(self, bottom, top):
         top[0].data[...] = bottom[0].data == bottom[1].data
-        print top[0].data
 
     def backward(self, top, propagate_down, bottom):
         pass
