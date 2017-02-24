@@ -26,7 +26,8 @@ def main():
     test_interval = int(sys.argv[3])
     # print log_file, display, test_interval
 
-    train_losses_shell = "cat {} | grep ' Iteration [0-9]*, loss = ' | awk '{}'".format(log_file, '{print $9}')
+    # train_losses_shell = "cat {} | grep ' Iteration [0-9]*, loss = ' | awk '{}'".format(log_file, '{print $9}')
+    train_losses_shell = "cat {} | grep ' Iteration [0-9]* ' | awk '{}'".format(log_file, '{print $13}')
     train_losses = os.popen(train_losses_shell).readlines()
     train_losses = map(eval, train_losses)
     idx_train_losses = [idx*display for idx in xrange(len(train_losses))]
@@ -39,8 +40,8 @@ def main():
     test_losses = map(eval, test_losses)
     idx_test_losses = [idx*test_interval for idx in xrange(len(test_losses))]
 
-    # print idx_test_losses
-    # print test_losses
+    print idx_test_losses
+    print test_losses
 
     if len(sys.argv) == 5:
         test_iter = int(sys.argv[4])
