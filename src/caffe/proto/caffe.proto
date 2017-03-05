@@ -807,6 +807,10 @@ message ImageDataParameter {
   optional string root_folder = 12 [default = ""];
 
   optional uint32 pair_size = 13 [default = 1];
+  optional int32 left_idx = 14 [default = -1];
+  optional int32 top_idx = 15 [default = -1];
+  optional int32 right_idx = 16 [default = -1];
+  optional int32 bottom_idx = 17 [default = -1];
 }
 
 message InfogainLossParameter {
