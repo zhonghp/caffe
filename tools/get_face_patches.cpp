@@ -2,7 +2,7 @@
 * @Author: vasezhong
 * @Date:   2017-03-06 15:39:15
 * @Last Modified by:   vasezhong
-* @Last Modified time: 2017-03-06 18:40:02
+* @Last Modified time: 2017-03-06 18:45:16
 */
 
 #include <opencv2/opencv.hpp>
@@ -11,6 +11,7 @@
 
 #include <algorithm>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -44,6 +45,12 @@ int get_patch_size(const int& left_idx, const int& top_idx,
   max_val = std::min(max_val, img_width - left_idx);
   max_val = std::min(max_val, img_height - top_idx);
   return max_val;
+}
+
+std::string int_to_string(const int& number) {
+    std::ostringstream oss;
+    oss << number;
+    return oss.str();
 }
 
 int main(int argc, char** argv) {
