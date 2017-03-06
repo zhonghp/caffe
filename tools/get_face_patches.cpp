@@ -2,9 +2,10 @@
 * @Author: vasezhong
 * @Date:   2017-03-06 15:39:15
 * @Last Modified by:   vasezhong
-* @Last Modified time: 2017-03-06 18:35:18
+* @Last Modified time: 2017-03-06 18:40:02
 */
 
+#include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -83,7 +84,7 @@ int main(int argc, char** argv) {
     std::string outfolder(argv[2]);
     for (int line_id = 0; line_id < lines.size(); ++line_id) {
         cv::Mat cv_img_origin = ReadImageToCVMat(lines[line_id], is_color);
-        CHECK(cv_img_origin.data) << "Could not load " << lines[lines_id];
+        CHECK(cv_img_origin.data) << "Could not load " << lines[line_id];
 
         if (left_idx >= 0 && top_idx >= 0 && right_idx >= 0 && bottom_idx >= 0) {
             const int img_width = cv_img_origin.cols;
@@ -97,9 +98,9 @@ int main(int argc, char** argv) {
 
         cv::Mat cv_img;
         cv::resize(cv_img_origin, cv_img, cv::Size(resize_width, resize_height));
-        CHECK(cv_img.data) << "Could not get patch from " << lines[lines_id];
+        CHECK(cv_img.data) << "Could not get patch from " << lines[line_id];
 
-        std::string filename(outfolder + "/" + std::string(line_id) + ".jpg");
+        std::string filename(outfolder + "/" + std::to_string(line_id) + ".jpg");
         cv::imwrite(filename, cv_img);
     }
 
