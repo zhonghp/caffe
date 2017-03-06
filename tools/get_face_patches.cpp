@@ -2,7 +2,7 @@
 * @Author: vasezhong
 * @Date:   2017-03-06 15:39:15
 * @Last Modified by:   vasezhong
-* @Last Modified time: 2017-03-06 18:45:16
+* @Last Modified time: 2017-03-06 18:48:49
 */
 
 #include <opencv2/opencv.hpp>
@@ -107,7 +107,7 @@ int main(int argc, char** argv) {
         cv::resize(cv_img_origin, cv_img, cv::Size(resize_width, resize_height));
         CHECK(cv_img.data) << "Could not get patch from " << lines[line_id];
 
-        std::string filename(outfolder + "/" + std::to_string(line_id) + ".jpg");
+        std::string filename(outfolder + "/" + int_to_string(line_id) + ".jpg");
         cv::imwrite(filename, cv_img);
     }
 
