@@ -2,8 +2,11 @@
 * @Author: vasezhong
 * @Date:   2017-03-06 15:39:15
 * @Last Modified by:   vasezhong
-* @Last Modified time: 2017-03-06 16:13:55
+* @Last Modified time: 2017-03-06 18:35:18
 */
+
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 #include <algorithm>
 #include <fstream>
